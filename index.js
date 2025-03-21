@@ -1,45 +1,67 @@
-for (var i = 0; i<document.querySelectorAll(".drum").length; i++)
-{
-    document.querySelectorAll(".drum")[i].addEventListener("click",function() {
-        //add what the function does, anonymous
-        var thisButton = this.innerHTML;
-        switch(thisButton){
-            case "w":
+// Store the number of drum buttons in a variable
+var numberOfDrumButtons = document.querySelectorAll(".drum").length;
+
+// Add click event listeners to all drum buttons
+for (var i = 0; i < numberOfDrumButtons; i++) {
+    document.querySelectorAll(".drum")[i].addEventListener("click", function() {
+        var buttonInnerHTML = this.innerHTML;
+        
+        makeSound(buttonInnerHTML);
+        buttonAnimation(buttonInnerHTML);
+    });
+}
+
+// Add keyboard event listener to the entire document
+document.addEventListener("keypress", function(event) {
+    makeSound(event.key);
+    buttonAnimation(event.key);
+});
+
+// Function to make sound based on the key/button pressed
+function makeSound(key) {
+    switch(key) {
+        case "w":
             var audio = new Audio("sounds/crash.mp3");
             audio.play();
             break;
-
-            case "a":
+        case "a":
             var audio = new Audio("sounds/kick-bass.mp3");
             audio.play();
             break;
-
-            case "s":
+        case "s":
             var audio = new Audio("sounds/snare.mp3");
             audio.play();
             break;
-
-            case "d":
+        case "d":
             var audio = new Audio("sounds/tom-1.mp3");
             audio.play();
             break;
-
-            case "j":
+        case "j":
             var audio = new Audio("sounds/tom-2.mp3");
             audio.play();
             break;
-
-            case "k":
+        case "k":
             var audio = new Audio("sounds/tom-3.mp3");
             audio.play();
             break;
-
-            case "l":
+        case "l":
             var audio = new Audio("sounds/tom-4.mp3");
             audio.play();
             break;
-        }
-        
+        default: 
+            console.log(key);
+    }
+}
 
-    })
+// Function to add animation to buttons when pressed
+function buttonAnimation(currentKey) {
+    var activeButton = document.querySelector("." + currentKey);
+    
+    if (activeButton) {
+        activeButton.classList.add("pressed");
+        
+        setTimeout(function() {
+            activeButton.classList.remove("pressed");
+        }, 100);
+    }
 }
